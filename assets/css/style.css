@@ -173,6 +173,8 @@ a:hover { text-decoration-thickness: 2px; }
 
 /* ---------- Sekce obecně ---------- */
 main > section { margin-top: var(--gap-sekce); scroll-margin-top: var(--hlavicka); }
+/* Mezi menu a Květinami je mezera menší, sekce na sebe navazují. */
+main > #kvetiny { margin-top: clamp(48px, 6vw, 72px); }
 main > section:first-child { margin-top: 0; }
 .sekce-hlava { display: flex; align-items: flex-end; gap: 16px; margin-bottom: 20px; }
 .sekce-hlava .kresba { width: 56px; height: 56px; }
@@ -203,10 +205,12 @@ main > section:first-child { margin-top: 0; }
 .uvod-poznamka .sipka { width: 60px; height: 60px; margin-top: -6px; }
 
 @media (min-width: 720px) {
-  /* Text začíná ve výšce horního stonku, ne až u fotky. Stonky leží v pruhu nad a pod fotkou. */
-  .uvod-mrizka { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; align-items: start; }
-  .uvod-text { grid-column: 1 / 7; }
-  .uvod-foto { grid-column: 7 / 13; margin-top: 0; padding-block: 92px; }
+  /* Fotka je užší než text a text je svisle na středu fotky, aby pod ním nezbylo prázdné místo.
+     Stonky leží v pruhu nad a pod fotkou. */
+  .uvod-mrizka { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; align-items: center; }
+  .uvod-text { grid-column: 1 / 8; }
+  .uvod { padding-top: 16px; }
+  .uvod-foto { grid-column: 8 / 13; justify-self: end; width: 100%; max-width: 420px; margin-top: 0; padding-block: 64px 92px; }
   .uvod-foto .stonek { display: block; position: absolute; z-index: 0; width: 260px; height: 100px; }
   .stonek-horni { left: 0; top: 0; }
   .stonek-dolni { right: 0; bottom: 0; }
@@ -358,7 +362,7 @@ main > section:first-child { margin-top: 0; }
 .kontakt-jak { margin-top: 10px; }
 .mapa { margin-top: 24px; }
 .mapa-blok { position: relative; aspect-ratio: 4 / 3; background: var(--sand); border: 1px solid var(--ink); border-radius: 2px;
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; text-align: center; padding: 16px; font-weight: 500; }
+  overflow: hidden; }
 .mapa-blok iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .mapa-odkazy { display: flex; flex-wrap: wrap; gap: 4px 24px; margin-top: 10px; }
 @media (min-width: 1080px) {

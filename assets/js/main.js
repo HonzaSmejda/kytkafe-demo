@@ -323,19 +323,4 @@
       potvrzeni.focus();
     });
   }
-
-  /* ---------- 5. Mapa po kliknutí ---------- */
-  var mapaTlacitko = doc.getElementById('zobraz-mapu');
-  if (mapaTlacitko) {
-    mapaTlacitko.addEventListener('click', function () {
-      var blokMapy = mapaTlacitko.closest('.mapa-blok');
-      var iframe = doc.createElement('iframe');
-      iframe.title = 'Mapa: Kytkafe, Mečová 8, Brno';
-      iframe.loading = 'lazy';
-      iframe.referrerPolicy = 'no-referrer-when-downgrade';
-      iframe.src = 'https://www.google.com/maps?q=Me%C4%8Dov%C3%A1+8%2C+Brno&output=embed';
-      blokMapy.textContent = '';
-      blokMapy.appendChild(iframe);
-    });
-  }
 })();
