@@ -140,7 +140,7 @@ a:hover { text-decoration-thickness: 2px; }
 .stav:empty { display: none; }
 
 .menu-tlacitko { display: none; width: 44px; height: 44px; padding: 0; background: transparent; color: var(--ink);
-  border: 0; border-radius: 2px; cursor: pointer; transition: background-color 120ms; }
+  border: 1.5px solid var(--ink); border-radius: 2px; cursor: pointer; transition: background-color 120ms; }
 /* Ikona menu: tři linky, po otevření křížek. */
 .menu-ikona, .menu-ikona::before, .menu-ikona::after { display: block; width: 24px; height: 2px; background: currentColor; }
 .menu-ikona { position: relative; }
@@ -238,12 +238,26 @@ main > section:first-child { margin-top: 0; }
 .menu-poznamka { margin-top: 20px; }
 .praktika { display: flex; flex-wrap: wrap; gap: 4px 24px; margin-top: 24px; font-weight: 500; }
 
-/* Fotky: na užších šířkách vodorovný pás nad menu, fotky mají pořád stejnou malou velikost.
-   Každá druhá je posunutá dolů, takže vznikne klikatá řada. */
-.kavarna-fotky { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; align-items: flex-start;
-  margin: 28px calc(-1 * var(--pad)) 0; padding: 0 var(--pad) 52px; scroll-padding-inline: var(--pad); }
-.kavarna-fotky .foto { flex: 0 0 185px; scroll-snap-align: start; position: relative; }
-.kavarna-fotky .foto:nth-child(even) { top: 40px; }
+/* Karusel: na užších šířkách je vidět vždy jedna fotka, další se přitáhne posunutím prstem.
+   Fotka končí kus před okrajem displeje. Pod karuselem jsou čárky (jedna na fotku, aktuální je tmavá)
+   a po stranách větvičky. Čárky doplňuje JavaScript, bez něj zůstane jen posuvný pás. */
+.karusel { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; align-items: flex-start;
+  scrollbar-width: none; overscroll-behavior-x: contain; }
+.karusel::-webkit-scrollbar { display: none; }
+.karusel .foto { flex: 0 0 100%; scroll-snap-align: center; }
+.karusel-carky { display: none; }
+.js .karusel-carky { display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 10px; }
+.carky { display: flex; gap: 6px; }
+.carky button { width: 18px; height: 24px; padding: 0; border: 0; background: transparent; cursor: pointer; }
+.carky button::before { content: ""; display: block; height: 3px; border-radius: 2px; background: var(--sand); }
+.carky button[aria-current="true"]::before { background: var(--ink); }
+.vetvicka { width: clamp(48px, 15vw, 78px); height: auto; aspect-ratio: 26 / 10; flex: none; }
+.vetvicka-leva { transform: scaleX(-1); }
+.kavarna-fotky { margin-top: 28px; }
+.kavarna-fotky + .karusel-carky { margin-bottom: 28px; }
+@media (min-width: 720px) {
+  .kavarna-fotky, .kavarna-fotky + .karusel-carky { max-width: 420px; }
+}
 .kavarna-menu { margin-top: 0; }
 
 @media (min-width: 720px) {
@@ -255,9 +269,10 @@ main > section:first-child { margin-top: 0; }
   .kavarna-intro { grid-column: 1 / 8; grid-row: 1; }
   .kavarna-menu { grid-column: 1 / 8; grid-row: 2; }
   .kavarna-fotky { grid-column: 9 / 13; grid-row: 1 / span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
-    overflow: visible; margin: 0; padding: 56px 0 48px; align-self: start; }
-  .kavarna-fotky .foto { flex: none; }
+    overflow: visible; max-width: none; margin: 0; padding: 56px 0 48px; align-self: start; }
+  .kavarna-fotky .foto { flex: none; position: relative; }
   .kavarna-fotky .foto:nth-child(even) { top: 48px; }
+  .js .kavarna-fotky + .karusel-carky { display: none; }
 }
 
 /* ---------- Květiny ---------- */
@@ -268,12 +283,11 @@ main > section:first-child { margin-top: 0; }
 .objednat-nadpis { font-weight: 500; margin-bottom: 10px; }
 .tlacitka-rada { display: flex; flex-wrap: wrap; gap: 10px; }
 @media (min-width: 720px) { .kv-info { grid-template-columns: 1.5fr 1fr; } }
-.pas { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; margin-top: 36px;
-  margin-inline: calc(-1 * var(--pad)); padding-inline: var(--pad); scroll-padding-inline: var(--pad); padding-bottom: 8px; }
-.pas .foto { flex: 0 0 72%; scroll-snap-align: start; }
+.pas { margin-top: 36px; }
 @media (min-width: 720px) {
-  .pas { display: grid; grid-template-columns: repeat(3, 1fr); overflow: visible; margin-inline: 0; padding-inline: 0; }
+  .pas { display: grid; grid-template-columns: repeat(3, 1fr); overflow: visible; }
   .pas .foto { flex: none; }
+  .js .pas + .karusel-carky { display: none; }
 }
 
 /* ---------- Workshopy (jen informační) ---------- */

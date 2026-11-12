@@ -323,4 +323,34 @@
       potvrzeni.focus();
     });
   }
+
+  /* ---------- 5. Karusel fotek: čárky pod fotkami ---------- */
+  Array.prototype.forEach.call(doc.querySelectorAll('.karusel'), function (karusel) {
+    var radek = karusel.nextElementSibling;
+    var carky = radek && radek.querySelector('.carky');
+    var fotky = karusel.querySelectorAll('.foto');
+    if (!carky || fotky.length < 2) return;
+    var tlacitka = [];
+    function krok() { return fotky[1].offsetLeft - fotky[0].offsetLeft; }
+    function oznac() {
+      var k = krok();
+      var i = k > 0 ? Math.round(karusel.scrollLeft / k) : 0;
+      tlacitka.forEach(function (t, n) { t.setAttribute('aria-current', String(n === i)); });
+    }
+    Array.prototype.forEach.call(fotky, function (f, n) {
+      var t = doc.createElement('button');
+      t.type = 'button';
+      t.tabIndex = -1;
+      t.addEventListener('click', function () { karusel.scrollTo({ left: n * krok(), behavior: 'smooth' }); });
+      carky.appendChild(t);
+      tlacitka.push(t);
+    });
+    var ceka = false;
+    karusel.addEventListener('scroll', function () {
+      if (ceka) return;
+      ceka = true;
+      window.requestAnimationFrame(function () { ceka = false; oznac(); });
+    }, { passive: true });
+    oznac();
+  });
 })();
