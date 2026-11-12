@@ -175,6 +175,7 @@ a:hover { text-decoration-thickness: 2px; }
   .nav-rychle { display: none; }
 }
 @media (min-width: 1080px) {
+  .uvod-foto .uvod-foto-mala { left: -18%; }
   .hlavicka-vnitrek { grid-template-columns: auto 1fr auto; padding-block: 12px; }
   .stav { grid-column: 3; grid-row: 1; }
   .js .nav:not(.je-otevrena), .nav { grid-column: 2; grid-row: 1; padding: 0; justify-self: center; }
@@ -204,26 +205,40 @@ main > section:first-child { margin-top: 0; }
 
 /* ---------- Úvod ---------- */
 .uvod { padding-top: clamp(32px, 6vw, 72px); }
-.uvod-text { display: flex; flex-direction: column; gap: 24px; }
+/* Na mobilu jsou prvky úvodu pod sebou v tomto pořadí: nadpis, věta, dvě malé fotky, štítek, tlačítka.
+   Fotky jsou v HTML až za textem, proto se obal textu rozpustí (display: contents) a pořadí určí order. */
+.uvod-mrizka { display: flex; flex-direction: column; gap: 24px; }
+.uvod-text { display: contents; }
+.uvod-text > h1 { order: 1; }
+.uvod-text > .perex { order: 2; }
+.uvod-foto { order: 3; }
+.uvod-text > .uvod-stitek { order: 4; }
+.uvod-text > .tlacitka { order: 5; }
 /* Štítek s adresou a vpravo vedle něj svislá větvička. Na nejužších displejích se větvička nevejde. */
 .uvod-stitek { display: flex; align-items: center; gap: 12px; }
 .uvod-text .stitek { flex: 0 1 auto; min-width: min(100%, 300px); }
 .uvod-vetvicka { display: none; flex: none; width: 40px; height: 122px; }
 @media (min-width: 384px) { .uvod-vetvicka { display: block; } }
-.uvod-foto { position: relative; margin-top: 32px; }
+/* Dvě malé fotky vedle sebe, druhá je níž a překrývá roh první. */
+.uvod-foto { position: relative; display: flex; align-items: flex-start; padding-bottom: 4px; }
 .uvod-foto .stonek { display: none; }
-.uvod-foto .foto { position: relative; z-index: 1; }
+.uvod-foto .foto { position: relative; z-index: 1; flex: none; width: min(45%, 170px); }
+.uvod-foto .uvod-foto-mala { z-index: 2; margin: 28px 0 0 -22px; outline: 4px solid var(--paper); border-radius: 2px; }
 .poznamka { font-family: var(--font-hand); font-weight: 500; font-size: 1.5rem; line-height: 1.2; color: var(--ink); }
-.uvod-poznamka { display: flex; align-items: flex-start; gap: 8px; margin-top: 12px; }
+.uvod-poznamka { display: none; align-items: flex-start; gap: 8px; margin-top: 12px; }
 .uvod-poznamka .sipka { width: 60px; height: 60px; margin-top: -6px; }
 
 @media (min-width: 720px) {
   /* Fotka je užší než text a text je svisle na středu fotky, aby pod ním nezbylo prázdné místo.
      Stonky leží v pruhu nad a pod fotkou. */
   .uvod-mrizka { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; align-items: center; }
-  .uvod-text { grid-column: 1 / 8; }
+  .uvod-text { display: flex; flex-direction: column; gap: 24px; grid-column: 1 / 8; }
   .uvod { padding-top: 16px; }
-  .uvod-foto { grid-column: 8 / 13; justify-self: end; width: 100%; max-width: 420px; margin-top: 0; padding-block: 64px 92px; }
+  /* Velká fotka výlohy, přes její levý dolní roh přesahuje malá fotka kávy. */
+  .uvod-foto { display: block; grid-column: 8 / 13; justify-self: end; width: 100%; max-width: 420px; margin-top: 0; padding-block: 64px 92px; }
+  .uvod-foto .foto { width: auto; }
+  .uvod-foto .uvod-foto-mala { position: absolute; left: -6%; bottom: 124px; width: 44%; margin: 0; }
+  .uvod-poznamka { display: flex; }
   .uvod-foto .stonek { display: block; position: absolute; z-index: 0; width: 260px; height: 100px; }
   .stonek-horni { left: 0; top: 0; }
   .stonek-dolni { right: 0; bottom: 0; }
