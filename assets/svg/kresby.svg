@@ -86,6 +86,28 @@
     </g>
   </symbol>
 
+  <!-- malá větvička se třemi většími lístky (pod karuselem fotek, po stranách čárek) -->
+  <symbol id="vetvicka" viewBox="0 0 78 30">
+    <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 29 C7 20 20 14 38 13 C52 12 64 14 73 19"/>
+      <path d="M15 19 C8 18 4 12 6 5 C13 7 17 13 15 19"/>
+      <path d="M38 13 C34 8 36 3 42 1 C46 6 44 11 38 13"/>
+      <path d="M58 14 C58 21 62 26 69 27 C71 21 66 15 58 14"/>
+    </g>
+  </symbol>
+
+  <!-- svislá větvička s lístky po obou stranách (úvod, vpravo vedle štítku s adresou) -->
+  <symbol id="vetvicka-svisla" viewBox="0 0 40 122">
+    <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 120 C13 92 26 62 20 36 C18 26 20 16 25 8"/>
+      <path d="M16 98 C8 96 4 88 6 80 C14 82 18 90 16 98"/>
+      <path d="M20 76 C28 74 33 66 31 58 C23 60 19 68 20 76"/>
+      <path d="M22 52 C14 50 10 42 12 34 C20 36 24 44 22 52"/>
+      <path d="M20 30 C28 28 33 20 31 12 C23 14 19 22 20 30"/>
+      <path d="M25 8 C20 6 19 2 22 1 C27 2 28 5 25 8 Z"/>
+    </g>
+  </symbol>
+
   <!-- stejný stonek otočený, vychází z pravého dolního rohu a zatáčí doleva (úvod, pod fotkou) -->
   <symbol id="stonek-dole" viewBox="0 0 260 100">
     <use href="#stonek" width="260" height="100" transform="rotate(180 130 50)"/>

@@ -205,7 +205,11 @@ main > section:first-child { margin-top: 0; }
 /* ---------- Úvod ---------- */
 .uvod { padding-top: clamp(32px, 6vw, 72px); }
 .uvod-text { display: flex; flex-direction: column; gap: 24px; }
-.uvod-text .stitek { align-self: flex-start; min-width: min(100%, 300px); }
+/* Štítek s adresou a vpravo vedle něj svislá větvička. Na nejužších displejích se větvička nevejde. */
+.uvod-stitek { display: flex; align-items: center; gap: 12px; }
+.uvod-text .stitek { flex: 0 1 auto; min-width: min(100%, 300px); }
+.uvod-vetvicka { display: none; flex: none; width: 40px; height: 122px; }
+@media (min-width: 384px) { .uvod-vetvicka { display: block; } }
 .uvod-foto { position: relative; margin-top: 32px; }
 .uvod-foto .stonek { display: none; }
 .uvod-foto .foto { position: relative; z-index: 1; }
@@ -251,7 +255,7 @@ main > section:first-child { margin-top: 0; }
 .carky button { width: 18px; height: 24px; padding: 0; border: 0; background: transparent; cursor: pointer; }
 .carky button::before { content: ""; display: block; height: 3px; border-radius: 2px; background: var(--sand); }
 .carky button[aria-current="true"]::before { background: var(--ink); }
-.vetvicka { width: clamp(48px, 15vw, 78px); height: auto; aspect-ratio: 26 / 10; flex: none; }
+.vetvicka { width: clamp(52px, 15vw, 78px); height: auto; aspect-ratio: 78 / 30; flex: none; }
 .vetvicka-leva { transform: scaleX(-1); }
 .kavarna-fotky { margin-top: 28px; }
 .kavarna-fotky + .karusel-carky { margin-bottom: 28px; }
